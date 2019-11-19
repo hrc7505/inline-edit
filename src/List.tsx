@@ -20,7 +20,7 @@ export default class List extends React.Component {
     );
   }
 
-  onChange = (key: string, value: boolean | string, index: number) => {
+  private onChange = (key: string, value: boolean | string, index: number) => {
     this.items[index] = {
       ...this.items[index],
       [key]: value,
