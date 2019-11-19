@@ -1,18 +1,17 @@
 import * as React from "react";
-import { FontSizes } from "@uifabric/styling";
-import List from "./List";
+
+import AllUsersContainer from "./users/allUsersContainer";
 
 export default function App() {
     return (
         <>
-            <div style={{ fontSize: FontSizes.xLargePlus, textAlign: "center" }}>
-                Inline edit demo
-            </div>
+            <h2 style={{  textAlign: "center" }}>
+                Inline edit demo <br/>
+                <small>• React • Typescript • Redux</small>
+            </h2>
             <hr />
             <div style={{ display: "flex", justifyContent: "center" }}>
-                <div style={{ maxWidth: 850, width: "100%", border: "1px solid #f3f2f1" }}>
-                    <List />
-                </div>
+                <AllUsersContainer />
             </div>
         </>
     );

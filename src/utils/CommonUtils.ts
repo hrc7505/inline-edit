@@ -1,7 +1,7 @@
 import { IColumn, IDropdownOption, ColumnActionsMode } from "office-ui-fabric-react";
 
-import ColumnKey from "./ColumnKey";
-import IItem from "./IItem";
+import IItem from "../models/IItem";
+import ColumnKey from "../users/enums/ColumnKey";
 
 const getRandomItem = (arr: any[]) => arr[Math.floor(Math.random() * arr.length)];
 
@@ -66,16 +66,19 @@ export default class CommonUtils {
 
     public static getRandomItems(): IItem[] {
         const toggleValues = [true, false];
-        const textFieldValues = ["Hello", "howare you", " what is your name?"];
+        const textFieldValues = ["Hello", "how are you", "what is your name?","Are you a developer?"];
         const dropdownValues = ["yes", "no", "none"];
+        
         const items: IItem[] = [];
         for (let i = 0; i < 10; i++) {
             items.push({
+                id: "u-" + i.toString(),
                 toggleFieldValue: getRandomItem(toggleValues),
                 textFieldValue: getRandomItem(textFieldValues),
                 dropdownValue: getRandomItem(dropdownValues),
-            })
+            });
         }
+
         return items;
     }
 }

@@ -1,32 +1,49 @@
 import * as React from 'react';
-import { DetailsList, IColumn, Toggle, TextField, Dropdown, IDropdownOption, ActionButton } from 'office-ui-fabric-react';
+import { DetailsList, IColumn, Toggle, TextField, Dropdown, IDropdownOption, ActionButton, Spinner } from 'office-ui-fabric-react';
 
-import ColumnKey from './ColumnKey';
-import CommonUtils from './CommonUtils';
-import IItem from './IItem';
+import IAllUsersProps from './interfaces/IAllUsersProps';
+import IItem from '../models/IItem';
+import ColumnKey from './enums/ColumnKey';
+import CommonUtils from '../utils/CommonUtils';
+import dataCreateUpdateUsers from '../data/duck/actions/dataCreateUpdateUsers';
 
-export default class List extends React.Component {
+export default class AllUsersComponent extends React.Component<IAllUsersProps> {
   private editableItemIndex: number = -1;
-  private items: IItem[] = CommonUtils.getRandomItems();
 
   public render() {
+    if (this.props.isLoading) {
+      return <Spinner />;
+    }
+
     return (
-      <DetailsList
-        items={this.items}
-        setKey="set"
-        columns={CommonUtils.getColumns()}
-        onRenderItemColumn={this.renderItemColumn}
-      />
+      <div style={{ maxWidth: 850, width: "100%", border: "1px solid #f3f2f1" }}>
+        <DetailsList
+          items={this.props.users}
+          setKey="set"
+          columns={CommonUtils.getColumns()}
+          onRenderItemColumn={this.renderItemColumn}
+        />
+      </div>
     );
   }
 
-  private onChange = (key: string, value: boolean | string, index: number) => {
-    this.items[index] = {
-      ...this.items[index],
-      [key]: value,
-    };
+  public componentDidMount() {
+    this.props.getData();
+  }
 
-    this.forceUpdate();
+  private onChange = (key: string, value: boolean | string, index: number) => {
+    /* this.props.users[index] = {
+      ...this.props.users[index],
+      [key]: value,
+    }; */
+    this.props.dispatch(dataCreateUpdateUsers({
+      data: {
+        [this.props.users[index].id]:{
+          ...this.props.users[index],
+          [key]: value,
+        }
+      }
+    }) as any);
   }
 
   private renderItemColumn = (item?: IItem, index?: number, column?: IColumn): React.ReactNode => {

@@ -1,0 +1,7 @@
+enum AllUsersActionTypes {
+    ALL_USERS_REQUEST_DATA = "ALL_USERS_REQUEST_DATA",
+    ALL_USERS_LOAD_DATA = "ALL_USERS_LOAD_DATA",
+    ALL_USERS_UPDATE_FIELD = "ALL_USERS_UPDATE_FIELD",
+};
+
+export default AllUsersActionTypes;
