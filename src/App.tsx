@@ -1,44 +1,33 @@
 import * as React from 'react';
 import './App.css';
-import { DetailsList, IColumn, Toggle, TextField, Dropdown } from 'office-ui-fabric-react';
-
-enum IColumnKey {
-  ToggleField = "toggleField",
-  TextField = "textField",
-  Dropdown = "dropdownField",
-};
-
-interface IItem {
-  id: number;
-  toggleFieldValue: boolean;
-  textFieldValue: string;
-  dropdownValue: string;
-}
+import { DetailsList, IColumn, Toggle, TextField, Dropdown, IDropdownOption } from 'office-ui-fabric-react';
+import ColumnKey from './ColumnKey';
+import CommonUtils from './CommonUtils';
+import IItem from './IItem';
 
 export default class App extends React.Component {
-  private items = [
+  private items: IItem[] = [
     {
       id: 1,
       toggleFieldValue: true,
       textFieldValue: "First",
-      dropdownValue: "firstD",
+      dropdownValue: "yes",
     },
     {
       id: 2,
       toggleFieldValue: false,
       textFieldValue: "Second",
-      dropdownValue: "SecondD",
+      dropdownValue: "no",
     },
-  ];
+  ];  
 
   public render() {
     return (
       <DetailsList
         items={this.items}
         setKey="set"
-        columns={this.getColumns()}
-        onRenderItemColumn={this.renderItemColumn as any}
-
+        columns={CommonUtils.getColumns()}
+        onRenderItemColumn={this.renderItemColumn}
       />
     );
   }
@@ -52,77 +41,43 @@ export default class App extends React.Component {
     this.forceUpdate();
   }
 
-  private renderItemColumn = (item: IItem, index: number, column: IColumn): React.ReactNode => {
-    switch (column.key) {
-      case IColumnKey.ToggleField:
+  private renderItemColumn = (item?: IItem, index?: number, column?: IColumn): React.ReactNode => {
+    const newItem: IItem = item as IItem;
+    const columnIndex: number = index as number;
+
+    switch ((column as IColumn).key) {
+      case ColumnKey.ToggleField:
         return (
           <Toggle
-            checked={item.toggleFieldValue}
+            checked={newItem.toggleFieldValue}
             onText="Yes"
             offText="No"
-            onChange={(e, checked: boolean | undefined) => this.onChange("toggleFieldValue", checked as boolean, index)}
+            onChange={(e, checked: boolean | undefined) => this.onChange("toggleFieldValue", checked as boolean, columnIndex)}
           />
         );
 
-      case IColumnKey.TextField:
+      case ColumnKey.TextField:
         return (
           <TextField
-            value={item.textFieldValue}
-            onChange={(e, checked: string | undefined) => this.onChange("textFieldValue", checked as string, index)}
+            value={newItem.textFieldValue}
+            onChange={(e, newValue: string | undefined) => this.onChange("textFieldValue", newValue as string, columnIndex)}
           />
         );
 
-      case IColumnKey.Dropdown:
+      case ColumnKey.Dropdown:
         return (
           <Dropdown
-         // selectedKey={selectedItem ? selectedItem.key : undefined}
-        //  onChange={this._onChange}
-          placeholder="Select an option"
-          options={[
-           // { key: 'fruitsHeader', text: 'Fruits', itemType: DropdownMenuItemType.Header },
-            { key: 'apple', text: 'Apple' },
-            { key: 'banana', text: 'Banana' },
-            { key: 'orange', text: 'Orange', disabled: true },
-            { key: 'grape', text: 'Grape' },
-          //  { key: 'divider_1', text: '-', itemType: DropdownMenuItemType.Divider },
-       //     { key: 'vegetablesHeader', text: 'Vegetables', itemType: DropdownMenuItemType.Header },
-            { key: 'broccoli', text: 'Broccoli' },
-            { key: 'carrot', text: 'Carrot' },
-            { key: 'lettuce', text: 'Lettuce' }
-          ]}
-          styles={{ dropdown: { width: 300 } }}
-        />
-          );
+            selectedKey={newItem.dropdownValue ? newItem.dropdownValue : undefined}
+            onChange={(event, option?: IDropdownOption, i?: number) =>
+              this.onChange("dropdownValue", (option as IDropdownOption).key as string, columnIndex)}
+            placeholder="Select an option"
+            options={CommonUtils.getDropdownOptions()}
+            styles={{ dropdown: { width: 200 } }}
+          />
+        );
 
       default:
-        return <span>nothing</span>;
+        return null;
     }
   }
-
-  private getColumns(): IColumn[] {
-    return [
-      {
-        key: IColumnKey.ToggleField,
-        name: "Toggle Field",
-        fieldName: IColumnKey.ToggleField,
-        minWidth: 75,
-        maxWidth:75,
-      },
-      {
-        key: IColumnKey.TextField,
-        name: "TextField Field",
-        fieldName: IColumnKey.TextField,
-        minWidth: 100,
-        maxWidth:150,
-      },
-      {
-        key: IColumnKey.Dropdown,
-        name: "Dropdown Field",
-        fieldName: IColumnKey.Dropdown,
-        minWidth: 100,
-        maxWidth:150,
-      },
-    ];
-  }
-
 }
