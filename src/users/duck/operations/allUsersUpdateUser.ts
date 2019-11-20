@@ -1,10 +1,10 @@
 import { Dispatch } from "redux";
 
-import IItem from "../../../models/IItem";
+import IUserModel from "../../../models/IUserModel";
 import dataCreateUpdateUsers from "../../../data/duck/actions/dataCreateUpdateUsers";
 import allUsersSelectEditingIndex from "../actions/allUsersSelectEditingIndex";
 
-const allUsersUpdateUser = (userModal: IItem, editingIndex: number) => (
+const allUsersUpdateUser = (userModal: IUserModel, editingIndex: number) => (
     async (dispatch: Dispatch) => {
         dispatch(allUsersSelectEditingIndex({
             isRowLoading: true,

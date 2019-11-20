@@ -9,18 +9,22 @@ import allUsersGetUsers from "./duck/operations/allUsersGetUsers";
 import IAllUsersProps from "./interfaces/IAllUsersProps";
 import AllUsersComponent from "./allUsersComponent";
 import IData from "../data/duck/interfaces/IData";
-import IItem from "../models/IItem";
+import IUserModel from "../models/IUserModel";
 import allUsersUpdateUser from "./duck/operations/allUsersUpdateUser";
 import allUsersSelectEditingIndex from "./duck/actions/allUsersSelectEditingIndex";
+import IUserDetailsList from "../detailsList/IUserDetailsList";
 
-const getUsers = (ids: string[], users: IData<IItem>) => {
+const getUsers = (ids: string[], users: IData<IUserModel>) => {
     if (ids && Object.keys(users).length > 0) {
-        return ids.map((id: string): IItem => {
+        return ids.map((id: string): IUserDetailsList => {
             return {
                 id: users[id].id,
-                toggleFieldValue: users[id].toggleFieldValue,
-                textFieldValue: users[id].textFieldValue,
-                dropdownValue: users[id].dropdownValue,
+                isSocialUser: users[id].isSocialUser,
+                name: users[id].name,
+                role: users[id].role,
+                isAgreed: users[id].isAgreed,
+                email: users[id].email,
+                city: users[id].city,
             };
         });
     }
@@ -39,7 +43,7 @@ const mapStateToProps: MapStateToProps<IAllUsersPropsFromState, object, IAppStat
 const mapDispatchToProps: MapDispatchToProps<IAllUsersPropsFromDispatch, object> =
     (dispatch: ThunkDispatch<IAppState, void, Action>): IAllUsersPropsFromDispatch => ({
         getData: () => dispatch(allUsersGetUsers()),
-        updateModal: (userModal: IItem, editingIndex: number) => dispatch(allUsersUpdateUser(userModal, editingIndex)),
+        updateModal: (userModal: IUserModel, editingIndex: number) => dispatch(allUsersUpdateUser(userModal, editingIndex)),
         selectRowToEdit: (editingIndex: number) => dispatch(allUsersSelectEditingIndex({
             editingIndex,
             isRowLoading: false,

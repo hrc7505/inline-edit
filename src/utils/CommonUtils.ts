@@ -1,6 +1,6 @@
 import { IColumn, IDropdownOption, ColumnActionsMode } from "office-ui-fabric-react";
 
-import IItem from "../models/IItem";
+import IUserModel from "../models/IUserModel";
 import ColumnKey from "../users/enums/ColumnKey";
 
 const getRandomItem = (arr: any[]) => arr[Math.floor(Math.random() * arr.length)];
@@ -15,30 +15,69 @@ export default class CommonUtils {
                 minWidth: 20,
                 maxWidth: 20,
                 columnActionsMode: ColumnActionsMode.disabled,
-                onRender: (item?: IItem, index?: number, column?: IColumn) => (index as number) + 1,
+                onRender: (item?: IUserModel, index?: number, column?: IColumn) => (index as number) + 1,
             },
             {
-                key: ColumnKey.ToggleField,
-                name: "Toggle Field",
-                fieldName: ColumnKey.ToggleField,
+                key: "isSocial",
+                // * Using data key to show control(TextField, ToggleField etc)
+                data: ColumnKey.ToggleField,
+                name: "Is Social?",
+                fieldName: "isSocial",
                 minWidth: 100,
                 maxWidth: 100,
                 columnActionsMode: ColumnActionsMode.disabled,
                 isResizable: true,
             },
             {
-                key: ColumnKey.TextField,
-                name: "TextField",
-                fieldName: ColumnKey.TextField,
+                key: "name",
+                // * Using data key to show control(TextField, ToggleField etc)
+                data: ColumnKey.TextField,
+                name: "Name",
+                fieldName: "name",
                 minWidth: 100,
                 maxWidth: 150,
                 columnActionsMode: ColumnActionsMode.disabled,
                 isResizable: true,
             },
             {
-                key: ColumnKey.Dropdown,
-                name: "Dropdown Field",
-                fieldName: ColumnKey.Dropdown,
+                key: "role",
+                // * Using data key to show control(TextField, ToggleField etc)
+                data: ColumnKey.Dropdown,
+                name: "Role",
+                fieldName: "role",
+                minWidth: 200,
+                maxWidth: 200,
+                columnActionsMode: ColumnActionsMode.disabled,
+                isResizable: true,
+            },
+            {
+                key: "isAgreed",
+                // * Using data key to show control(TextField, ToggleField etc)
+                data: ColumnKey.ToggleField,
+                name: "Is Agreed?",
+                fieldName: "isAgreed",
+                minWidth: 100,
+                maxWidth: 100,
+                columnActionsMode: ColumnActionsMode.disabled,
+                isResizable: true,
+            },
+            {
+                key: "email",
+                // * Using data key to show control(TextField, ToggleField etc)
+                data: ColumnKey.TextField,
+                name: "Email",
+                fieldName: "email",
+                minWidth: 100,
+                maxWidth: 150,
+                columnActionsMode: ColumnActionsMode.disabled,
+                isResizable: true,
+            },
+            {
+                key: "city",
+                // * Using data key to show control(TextField, ToggleField etc)
+                data: ColumnKey.Dropdown,
+                name: "City",
+                fieldName: "city",
                 minWidth: 200,
                 maxWidth: 200,
                 columnActionsMode: ColumnActionsMode.disabled,
@@ -46,6 +85,8 @@ export default class CommonUtils {
             },
             {
                 key: ColumnKey.Edit,
+                // * Using data key to show control(TextField, ToggleField, Edit button etc)
+                data: ColumnKey.Edit,
                 name: "Edit",
                 fieldName: ColumnKey.Edit,
                 minWidth: 75,
@@ -56,26 +97,52 @@ export default class CommonUtils {
         ];
     }
 
-    public static getDropdownOptions(): IDropdownOption[] {
+    public static getDropdownOptions(fieldName: string): IDropdownOption[] {
+        if (fieldName === "role") {
+            return [
+                { key: 'qc', text: 'QC' },
+                { key: 'nde', text: 'NDE' },
+                { key: 'siteadmin', text: 'Site Admin' },
+            ];
+        }
+
+        if (fieldName === "city") {
+            return [
+                { key: 'msn', text: 'Mehsana' },
+                { key: 'ahm', text: 'Ahmedabad' },
+                { key: 'del', text: 'Delhi' },
+                { key: 'gan', text: 'Gandhinagar' },
+            ];
+        }
+
         return [
             { key: 'yes', text: 'Yes' },
             { key: 'no', text: 'No' },
             { key: 'none', text: 'None' },
-        ]
-    };
+        ];
+    }
 
-    public static getRandomItems(): IItem[] {
+    public static getRandomItems(): IUserModel[] {
         const toggleValues = [true, false];
-        const textFieldValues = ["Hello", "how are you", "what is your name?","Are you a developer?"];
-        const dropdownValues = ["yes", "no", "none"];
-        
-        const items: IItem[] = [];
-        for (let i = 0; i < 2; i++) {
+        const textFieldValues = ["Hardik", "Haresh", "Keyur", "Nikunj", "Jhon", "Ramesh", "Harsimrat", "Martha", "Sherwin", "Jigar", "Sundar", "Dhaval", "Sagar"];
+        const roles = ["qc", "nde", "siteadmin"];
+        const cities = ["msn", "ahm", "del", "gan"];
+
+        const items: IUserModel[] = [];
+        for (let i = 0; i < 20; i++) {
             items.push({
                 id: "u-" + i.toString(),
-                toggleFieldValue: getRandomItem(toggleValues),
-                textFieldValue: getRandomItem(textFieldValues),
-                dropdownValue: getRandomItem(dropdownValues),
+                isSocialUser: getRandomItem(toggleValues),
+                name: getRandomItem(textFieldValues),
+                role: getRandomItem(roles),
+                isAgreed: getRandomItem(toggleValues),
+                email: "user" + i + "@user.com",
+                city: getRandomItem(cities),
+                address: "00" + i + ", Nigam Nagar",
+                createdAt: "",
+                createdBy: "Hardik Chaudhari",
+                updatedAt: "",
+                updatedBy: "",
             });
         }
 

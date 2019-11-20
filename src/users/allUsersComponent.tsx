@@ -2,10 +2,9 @@ import * as React from 'react';
 import { ShimmeredDetailsList, IColumn } from 'office-ui-fabric-react';
 
 import IAllUsersProps from './interfaces/IAllUsersProps';
-import IItem from '../models/IItem';
+import IUserModel from '../models/IUserModel';
 import CommonUtils from '../utils/CommonUtils';
 import EditableComponent from './editable/edtitableComponent';
-import FieldKey from './editable/enums/fieldKey';
 
 export type EditedData = { [index: number]: { [key: string]: string | boolean } };
 
@@ -14,7 +13,7 @@ export default class AllUsersComponent extends React.Component<IAllUsersProps> {
 
   public render() {
     return (
-      <div style={{ maxWidth: 850, width: "100%", border: "1px solid #f3f2f1" }}>
+      <div style={{ width: "100%", border: "1px solid #f3f2f1" }}>
         <ShimmeredDetailsList
           items={this.props.listItems}
           setKey="set"
@@ -30,7 +29,7 @@ export default class AllUsersComponent extends React.Component<IAllUsersProps> {
     this.props.getData();
   }
 
-  private onChange = (key: FieldKey, value: boolean | string, index: number) => {
+  private onChange = (key: string, value: boolean | string, index: number) => {
     this.editedData = {
       [index]: {
         ...this.editedData[index],
@@ -55,16 +54,17 @@ export default class AllUsersComponent extends React.Component<IAllUsersProps> {
       index = -1;
       this.props.updateModal({
         ...this.editedData[itemIndex],
+        // Todo: Get from argument
         id: this.props.listItems[itemIndex].id
-      } as unknown as IItem, itemIndex);
+      } as unknown as IUserModel, itemIndex);
     }
   }
 
-  private renderItemColumn = (item: IItem, index?: number, column?: IColumn): React.ReactNode => {
+  private renderItemColumn = (item: IUserModel, index?: number, column?: IColumn): React.ReactNode => {
     return (
       <EditableComponent
         index={index as number}
-        item={item}
+        item={item as any}
         column={column as IColumn}
         isEditMode={this.props.editingIndex === index}
         onActionBtnClick={this.props.isRowLoading ? () => null : this.handleActionBtnClick}

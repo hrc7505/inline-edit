@@ -1,8 +1,8 @@
-import IItem from "../../models/IItem";
+import IUserDetailsList from "../../detailsList/IUserDetailsList";
 
 export default interface IListPropsFromState {
     isLoading: boolean;
-    listItems: IItem[];
+    listItems: IUserDetailsList[];
     editingIndex: number;
     isRowLoading: boolean;
 }

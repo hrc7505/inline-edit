@@ -1,6 +1,6 @@
 import IData from "./IData";
-import IItem from "../../../models/IItem";
+import IUserModel from "../../../models/IUserModel";
 
 export default interface IDataState {
-    users: IData<IItem>;
+    users: IData<IUserModel>;
 }

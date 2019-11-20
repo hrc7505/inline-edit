@@ -1,10 +1,10 @@
 import IDataCreateUpdateUsersAction from "./interfaces/IDataCreateUpdateUsersAction";
 import IDataCreateUpdateDataPayload from "./interfaces/IDataCreateUpdateDataPayload";
-import IItem from "../../../models/IItem";
+import IUserModel from "../../../models/IUserModel";
 import DataActionTypes from "../actionTypes/dataActionTypes";
 
 const dataCreateUpdateUsers =
-    (payload: IDataCreateUpdateDataPayload<IItem>): IDataCreateUpdateUsersAction => ({
+    (payload: IDataCreateUpdateDataPayload<IUserModel>): IDataCreateUpdateUsersAction => ({
         type: DataActionTypes.DATA_CREATE_UPDATE_USERS,
         payload,
     });

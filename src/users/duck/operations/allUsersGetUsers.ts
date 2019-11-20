@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 
 import allUsersRequestData from "../actions/allUsersRequestData";
 import allUsersLoadData from "../actions/allUsersLoadData";
-import IItem from "../../../models/IItem";
+import IUserModel from "../../../models/IUserModel";
 import CommonUtils from "../../../utils/CommonUtils";
 import IDataCreateUpdateDataPayload from "../../../data/duck/actions/interfaces/IDataCreateUpdateDataPayload";
 import dataCreateUpdateUsers from "../../../data/duck/actions/dataCreateUpdateUsers";
@@ -15,18 +15,18 @@ const allUsersGetUsers = () => (
             // Delaying to show spinner in the screen.
 
             // Random item list.
-            const items: IItem[] = CommonUtils.getRandomItems();
+            const items: IUserModel[] = CommonUtils.getRandomItems();
 
             // Dispatch ids to component specific reducer
             dispatch(allUsersLoadData({
-                users: items.map((item: IItem) => item.id)
+                users: items.map((item: IUserModel) => item.id)
             }));
 
-            const payload: IDataCreateUpdateDataPayload<IItem> = {
+            const payload: IDataCreateUpdateDataPayload<IUserModel> = {
                 data: {}
             };
 
-            items.forEach((user: IItem): void => {
+            items.forEach((user: IUserModel): void => {
                 payload.data[user.id] = user;
             });
 

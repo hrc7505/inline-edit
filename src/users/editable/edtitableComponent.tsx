@@ -4,23 +4,23 @@ import { Toggle, TextField, Dropdown, IDropdownOption, ActionButton, Spinner, Sp
 import IEditableProps from "./interfaces/IEditableProps";
 import ColumnKey from "../enums/ColumnKey";
 import CommonUtils from "../../utils/CommonUtils";
-import FieldKey from "./enums/fieldKey";
 
 export default class EditableComponent extends React.Component<IEditableProps> {
     public render() {
         const { index, column, isEditMode, item, itemToShow } = this.props;
         let compoToRender;
-
-        switch (column.key) {
+        
+        const fieldName=column.fieldName as  string;
+        switch (column.data) {
             case ColumnKey.ToggleField:
                 compoToRender = (
                     !isEditMode
-                        ? (item[FieldKey.ToggleFieldValue] ? "Yes" : "No")
+                        ? item[fieldName] ? "Yes" : "No"
                         : <Toggle
-                            checked={itemToShow[FieldKey.ToggleFieldValue] as boolean}
+                            checked={itemToShow[fieldName] as boolean}
                             onText="Yes"
                             offText="No"
-                            onChange={(e, checked?: boolean) => this.props.onChange(FieldKey.ToggleFieldValue, checked as boolean, index)}
+                            onChange={(e, checked?: boolean) => this.props.onChange(fieldName, checked as boolean, index)}
                         />
                 );
                 break;
@@ -28,27 +28,28 @@ export default class EditableComponent extends React.Component<IEditableProps> {
             case ColumnKey.TextField:
                 compoToRender = (
                     !isEditMode
-                        ? item[FieldKey.TextFieldValue]
+                        ? item[fieldName]
                         : <TextField
-                            value={itemToShow[FieldKey.TextFieldValue] as string}
-                            onChange={(e, newValue?: string) => this.props.onChange(FieldKey.TextFieldValue, newValue as string, index)}
+                            value={itemToShow[fieldName] as string}
+                            onChange={(e, newValue?: string) => this.props.onChange(fieldName, newValue as string, index)}
                         />
                 );
                 break;
 
             case ColumnKey.Dropdown:
                 if (!isEditMode) {
-                    const option = CommonUtils.getDropdownOptions().find((option: IDropdownOption) => option.key === item[FieldKey.DropdownValue]);
+                    const option = CommonUtils.getDropdownOptions(fieldName)
+                        .find((option: IDropdownOption) => option.key === item[fieldName]);
                     return option ? option.text : null;
                 }
 
                 compoToRender = (
                     <Dropdown
-                        selectedKey={itemToShow[FieldKey.DropdownValue] as string}
+                        selectedKey={itemToShow[fieldName] as string}
                         onChange={(e, option?: IDropdownOption, i?: number) =>
-                            this.props.onChange(FieldKey.DropdownValue, (option as IDropdownOption).key as string, index)}
+                            this.props.onChange(fieldName, (option as IDropdownOption).key as string, index)}
                         placeholder="Select an item"
-                        options={CommonUtils.getDropdownOptions()}
+                        options={CommonUtils.getDropdownOptions(fieldName)}
                         styles={{ dropdown: { width: 200 } }}
                     />
                 );
@@ -89,11 +90,7 @@ export default class EditableComponent extends React.Component<IEditableProps> {
     private handleActionBtnClick = () => {
         if (!this.props.isEditMode) {
             this.props.updateEditedData({
-                [this.props.index]: {
-                    [FieldKey.ToggleFieldValue]: this.props.item.toggleFieldValue,
-                    [FieldKey.TextFieldValue]: this.props.item.textFieldValue,
-                    [FieldKey.DropdownValue]: this.props.item.dropdownValue,
-                }
+                [this.props.index]: this.props.item
             });
         }
         this.props.onActionBtnClick(this.props.index);
