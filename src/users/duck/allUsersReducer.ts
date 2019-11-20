@@ -4,42 +4,42 @@ import IAllUsersRequestDataAction from "./actions/interfaces/IAllUsersRequestDat
 import IAllUsersLoadDataAction from "./actions/interfaces/IAllUsersLoadDataAction";
 import IAllUsersState from "./interfaces/IAllUsersState";
 import AllUsersActionTypes from "./actionTypes/AllUsersActionTypes";
-import IAllUsersUpdateFieldAction from "./actions/interfaces/IAllUsersUpdateFieldAction";
+import IAllUsersSelectEditingIndexAction from "./actions/interfaces/IAllUsersSelectEditingIndexAction";
 
-type Action = IAllUsersRequestDataAction | IAllUsersLoadDataAction |IAllUsersUpdateFieldAction;
+type Action = IAllUsersRequestDataAction | IAllUsersLoadDataAction | IAllUsersSelectEditingIndexAction;
 
 const initialState: IAllUsersState = {
     isLoading: false,
     users: [],
+    isRowLoading: false,
+    editingIndex: -1,
 };
 
 const allUsersReducer: Reducer<IAllUsersState, Action> =
-    (state: IAllUsersState | undefined, action: Action): IAllUsersState => {
+    (state: IAllUsersState = initialState, action: Action): IAllUsersState => {
         switch (action.type) {
             case AllUsersActionTypes.ALL_USERS_REQUEST_DATA:
                 return {
                     ...state,
                     isLoading: true,
-                } as IAllUsersState;
+                };
 
             case AllUsersActionTypes.ALL_USERS_LOAD_DATA:
                 return {
                     ...state,
                     isLoading: false,
                     users: action.payload.users,
-                } as IAllUsersState;
+                };
 
-           /*  case AllUsersActionTypes.ALL_USERS_UPDATE_FIELD:
+            case AllUsersActionTypes.ALL_USERS_SELECT_EDITING_INDEX:
                 return {
                     ...state,
-                    isLoading: false,
-                    users:{
-                        ...state.users,
-                    },
-                } as IAllUsersState; */
+                    isRowLoading: action.payload.isRowLoading,
+                    editingIndex: action.payload.editingIndex,
+                };
 
             default:
-                return state || initialState;
+                return state;
         }
     };
 

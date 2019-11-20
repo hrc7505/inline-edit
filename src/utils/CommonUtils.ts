@@ -48,8 +48,8 @@ export default class CommonUtils {
                 key: ColumnKey.Edit,
                 name: "Edit",
                 fieldName: ColumnKey.Edit,
-                minWidth: 100,
-                maxWidth: 100,
+                minWidth: 75,
+                maxWidth: 75,
                 columnActionsMode: ColumnActionsMode.disabled,
                 isResizable: true,
             },
@@ -70,7 +70,7 @@ export default class CommonUtils {
         const dropdownValues = ["yes", "no", "none"];
         
         const items: IItem[] = [];
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 2; i++) {
             items.push({
                 id: "u-" + i.toString(),
                 toggleFieldValue: getRandomItem(toggleValues),

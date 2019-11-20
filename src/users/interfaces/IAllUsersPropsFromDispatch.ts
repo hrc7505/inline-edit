@@ -1,9 +1,7 @@
-import { ThunkDispatch } from "redux-thunk";
-import { Action } from "redux";
-
-import IAppState from "../../duck/interfaces/IAppState";
+import IItem from "../../models/IItem";
 
 export default interface IListPropsFromDispatch {
     getData: () => void;
-    dispatch: ThunkDispatch<IAppState, void, Action>;
+    updateModal: (userModal: IItem, editingIndex: number) => void;
+    selectRowToEdit: (editingIndex: number) => void;
 }

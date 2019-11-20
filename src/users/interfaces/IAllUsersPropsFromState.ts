@@ -2,5 +2,7 @@ import IItem from "../../models/IItem";
 
 export default interface IListPropsFromState {
     isLoading: boolean;
-    users: IItem[];
+    listItems: IItem[];
+    editingIndex: number;
+    isRowLoading: boolean;
 }
