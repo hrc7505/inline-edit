@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DetailsList, IColumn, Spinner } from 'office-ui-fabric-react';
+import { ShimmeredDetailsList, IColumn } from 'office-ui-fabric-react';
 
 import IAllUsersProps from './interfaces/IAllUsersProps';
 import IItem from '../models/IItem';
@@ -13,17 +13,14 @@ export default class AllUsersComponent extends React.Component<IAllUsersProps> {
   private editedData: EditedData = {};
 
   public render() {
-    if (this.props.isLoading) {
-      return <Spinner />;
-    }
-
     return (
       <div style={{ maxWidth: 850, width: "100%", border: "1px solid #f3f2f1" }}>
-        <DetailsList
+        <ShimmeredDetailsList
           items={this.props.listItems}
           setKey="set"
           columns={CommonUtils.getColumns()}
           onRenderItemColumn={this.renderItemColumn}
+          enableShimmer={this.props.isLoading}
         />
       </div>
     );
