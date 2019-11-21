@@ -2,7 +2,7 @@ import { IColumn } from "office-ui-fabric-react";
 
 import { EditedData } from "../../allUsersComponent";
 
-export default interface IEditableProps {
+export default interface IAllUsersEditProps {
     item: { [key: string]: string | boolean; };
     index: number;
     column: IColumn;

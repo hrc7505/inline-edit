@@ -1,16 +1,16 @@
 import * as React from "react";
 import { Toggle, TextField, Dropdown, IDropdownOption, ActionButton, Spinner, SpinnerSize } from 'office-ui-fabric-react';
 
-import IEditableProps from "./interfaces/IEditableProps";
+import IAllUsersEditProps from "./interfaces/IAllUsersEditProps";
 import ColumnKey from "../enums/ColumnKey";
 import CommonUtils from "../../utils/CommonUtils";
 
-export default class EditableComponent extends React.Component<IEditableProps> {
+export default class AllUsersEditComponent extends React.Component<IAllUsersEditProps> {
     public render() {
         const { index, column, isEditMode, item, itemToShow } = this.props;
         let compoToRender;
-        
-        const fieldName=column.fieldName as  string;
+
+        const fieldName = column.fieldName as string;
         switch (column.data) {
             case ColumnKey.ToggleField:
                 compoToRender = (
@@ -81,7 +81,7 @@ export default class EditableComponent extends React.Component<IEditableProps> {
         }
 
         return (
-            <div style={{ pointerEvents: this.props.isLoading ? "none" : "auto" }}>
+            <div style={{ pointerEvents: this.props.isLoading ? "none" : "auto", opacity: this.props.isLoading ? 0.5 : 1 }}>
                 {compoToRender}
             </div>
         );

@@ -4,7 +4,7 @@ import { ShimmeredDetailsList, IColumn } from 'office-ui-fabric-react';
 import IAllUsersProps from './interfaces/IAllUsersProps';
 import IUserModel from '../models/IUserModel';
 import CommonUtils from '../utils/CommonUtils';
-import EditableComponent from './editable/edtitableComponent';
+import AllUsersEditComponent from './allUsersEdit/allUsersEditComponent';
 
 export type EditedData = { [index: number]: { [key: string]: string | boolean } };
 
@@ -52,17 +52,13 @@ export default class AllUsersComponent extends React.Component<IAllUsersProps> {
       this.props.selectRowToEdit(index)
     } else {
       index = -1;
-      this.props.updateModal({
-        ...this.editedData[itemIndex],
-        // Todo: Get from argument
-        id: this.props.listItems[itemIndex].id
-      } as unknown as IUserModel, itemIndex);
+      this.props.updateModal(this.editedData[itemIndex] as unknown as IUserModel, itemIndex);
     }
   }
 
   private renderItemColumn = (item: IUserModel, index?: number, column?: IColumn): React.ReactNode => {
     return (
-      <EditableComponent
+      <AllUsersEditComponent
         index={index as number}
         item={item as any}
         column={column as IColumn}
