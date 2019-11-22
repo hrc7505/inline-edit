@@ -5,11 +5,10 @@ import IAllUsersProps from './interfaces/IAllUsersProps';
 import IUserModel from '../models/IUserModel';
 import CommonUtils from '../utils/CommonUtils';
 import AllUsersEditComponent from './allUsersEdit/allUsersEditComponent';
-
-export type EditedData = { [index: number]: { [key: string]: string | boolean } };
+import IAllUsersEditedData from './interfaces/IAllUsersEditedData';
 
 export default class AllUsersComponent extends React.Component<IAllUsersProps> {
-  private editedData: EditedData = {};
+  private editedData: IAllUsersEditedData = {};
 
   public render() {
     return (
@@ -40,7 +39,7 @@ export default class AllUsersComponent extends React.Component<IAllUsersProps> {
     this.forceUpdate();
   }
 
-  private updateEditedData = (data: EditedData) => {
+  private updateEditedData = (data: IAllUsersEditedData) => {
     this.editedData = data;
     this.forceUpdate();
   }
@@ -59,13 +58,13 @@ export default class AllUsersComponent extends React.Component<IAllUsersProps> {
   private renderItemColumn = (item: IUserModel, index?: number, column?: IColumn): React.ReactNode => {
     return (
       <AllUsersEditComponent
-        index={index as number}
+        itemIndex={index as number}
         item={item as any}
         column={column as IColumn}
         isEditMode={this.props.editingIndex === index}
         onActionBtnClick={this.props.isRowLoading ? () => null : this.handleActionBtnClick}
         onChange={this.onChange}
-        itemToShow={this.editedData[index as number]}
+        fieldItem={this.editedData[index as number]}
         updateEditedData={this.props.isRowLoading ? () => null : this.updateEditedData}
         isLoading={this.props.editingIndex === index && this.props.isRowLoading}
       />

@@ -7,7 +7,7 @@ import CommonUtils from "../../utils/CommonUtils";
 
 export default class AllUsersEditComponent extends React.Component<IAllUsersEditProps> {
     public render() {
-        const { index, column, isEditMode, item, itemToShow } = this.props;
+        const { itemIndex: index, column, isEditMode, item, fieldItem: itemToShow } = this.props;
         let compoToRender;
 
         const fieldName = column.fieldName as string;
@@ -68,6 +68,7 @@ export default class AllUsersEditComponent extends React.Component<IAllUsersEdit
                     : (
                         <ActionButton
                             iconProps={{ iconName: !isEditMode ? 'edit' : "save" }}
+                            styles={{ root: { height: "20px" } }}
                             onClick={this.handleActionBtnClick}
                         >
                             {!isEditMode ? "Edit" : "Save"}
@@ -90,9 +91,9 @@ export default class AllUsersEditComponent extends React.Component<IAllUsersEdit
     private handleActionBtnClick = () => {
         if (!this.props.isEditMode) {
             this.props.updateEditedData({
-                [this.props.index]: this.props.item
+                [this.props.itemIndex]: this.props.item
             });
         }
-        this.props.onActionBtnClick(this.props.index);
+        this.props.onActionBtnClick(this.props.itemIndex);
     }
 }

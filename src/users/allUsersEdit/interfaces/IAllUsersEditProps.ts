@@ -1,15 +1,21 @@
 import { IColumn } from "office-ui-fabric-react";
-
-import { EditedData } from "../../allUsersComponent";
+import IAllUsersKeyValuePair from "../../interfaces/IAllUsersKeyValuePair";
+import IAllUsersEditedData from "../../interfaces/IAllUsersEditedData";
 
 export default interface IAllUsersEditProps {
-    item: { [key: string]: string | boolean; };
-    index: number;
-    column: IColumn;
+    /**
+     * An item to be shown in non edit mode.
+     */
+    item: IAllUsersKeyValuePair;
+     /**
+     * Used in edit mode. On save this data will go for the update.
+     */
+    fieldItem: IAllUsersKeyValuePair;
+    isLoading: boolean;
     isEditMode: boolean;
+    itemIndex: number;
+    column: IColumn;
     onChange: (fieldKey: string, value: boolean | string, index: number) => void;
     onActionBtnClick: (itemIndex: number) => void;
-    itemToShow: { [key: string]: string | boolean; };
-    updateEditedData: (data: EditedData) => void;
-    isLoading: boolean;
+    updateEditedData: (data: IAllUsersEditedData) => void;
 }
