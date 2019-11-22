@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ShimmeredDetailsList, IColumn } from 'office-ui-fabric-react';
+import { ShimmeredDetailsList, IColumn, SelectionMode } from 'office-ui-fabric-react';
 
 import IAllUsersProps from './interfaces/IAllUsersProps';
 import IUserModel from '../models/IUserModel';
@@ -19,6 +19,7 @@ export default class AllUsersComponent extends React.Component<IAllUsersProps> {
           columns={CommonUtils.getColumns()}
           onRenderItemColumn={this.renderItemColumn}
           enableShimmer={this.props.isLoading}
+          selectionMode={SelectionMode.none}
         />
       </div>
     );

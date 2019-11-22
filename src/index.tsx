@@ -8,6 +8,27 @@ import { initializeIcons } from '@uifabric/icons';
 
 import App from './App';
 import appReducer from './duck/appReducer';
+import { loadTheme } from 'office-ui-fabric-react';
+
+loadTheme({
+    fonts: {
+        small: {
+            fontSize: '14px'
+        },
+        medium: {
+            fontSize: '16px'
+        },
+        large: {
+            fontSize: '20px',
+            fontWeight: '600'
+        },
+        xLarge: {
+            fontSize: '22px',
+            fontWeight: '600'
+        }
+    },
+    effects:{roundedCorner2:"6px"}
+});
 
 initializeIcons();
 

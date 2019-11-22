@@ -12,8 +12,8 @@ export default class CommonUtils {
                 key: "index",
                 name: "#",
                 fieldName: "index",
-                minWidth: 20,
-                maxWidth: 20,
+                minWidth: 40,
+                maxWidth: 40,
                 columnActionsMode: ColumnActionsMode.disabled,
                 onRender: (item?: IUserModel, index?: number, column?: IColumn) => (index as number) + 1,
             },
@@ -124,7 +124,7 @@ export default class CommonUtils {
 
     public static getRandomItems(): IUserModel[] {
         const toggleValues = [true, false];
-        const textFieldValues = ["Hardik", "Haresh", "Keyur", "Nikunj", "Jhon", "Ramesh", "Harsimrat", "Martha", "Sherwin", "Jigar", "Sundar", "Dhaval", "Sagar"];
+        const textFieldValues = ["Hardik Chaudhari", "Haresh Kalyani", "Keyur Belani", "Nikunj Mistri", "Jhon Doe", "Ramesh Oza", "Harsimrat Thukral", "Martha Thukral", "Sherwin Kong", "Jigar Paladiya", "Sundar Gada", "Dhaval Shah", "Sagar Chauhan"];
         const roles = ["qc", "nde", "siteadmin"];
         const cities = ["msn", "ahm", "del", "gan"];
 
